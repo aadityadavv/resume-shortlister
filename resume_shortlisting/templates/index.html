@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Shortlisting Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: url();
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 60px auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 20px auto;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 30px;
+        }
+        .result h2 {
+            color: #444;
+        }
+        .card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .match {
+            color: green;
+            font-weight: bold;
+        }
+        .nomatch {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Resume Shortlisting Tool</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="resumes" multiple required>
+            <button type="submit">Shortlist Candidates</button>
+        </form>
+
+        {% if results %}
+        <div class="result">
+            <h2>Results:</h2>
+            {% for filename, prediction, confidence in results %}
+                <div class="card">
+                    <strong>{{ filename }}</strong><br>
+                    Status:
+                    {% if prediction == 1 %}
+                        <span class="match">Match ✅</span>
+                    {% else %}
+                        <span class="nomatch">No Match ❌</span>
+                    {% endif %}
+                    <br>
+                    Confidence: {{ confidence }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
